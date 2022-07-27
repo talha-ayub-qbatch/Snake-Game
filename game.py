@@ -1,4 +1,5 @@
 import random
+import time
  
 posi1 = 0
 posi2 = 0
