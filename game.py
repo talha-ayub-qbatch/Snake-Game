@@ -1,6 +1,6 @@
 import random
 import time
- 
+#talha
 posi1 = 0
 posi2 = 0
 
