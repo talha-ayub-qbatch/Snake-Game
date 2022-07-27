@@ -1,10 +1,8 @@
+
 import random
  
 posi1 = 0
 posi2 = 0
-
-
-                
 
 def decorator1(func):
 
@@ -12,8 +10,6 @@ def decorator1(func):
         '''check the value is 1 or not'''
         while(True):
             try:
-               
-                print("\n\n************* Player 1's turn *****************")
                 value_check = int(input("\nPlayer 1: Enter (1) to throw dice: "))
 
                 if value_check != 1:
@@ -160,27 +156,6 @@ class Snake_Ladder:
             if(self.posi2 >= game_limit):
                 victory_msg2()
                 
-   
-       
-
-
-end_value = 15
+end_value = 100
 obj = Snake_Ladder(posi1, posi2)
 obj.taking_input(end_value)
-
-
-
-
-
-
-
-
-   
-        
-
-
-
-
-
-
-
