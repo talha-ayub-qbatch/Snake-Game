@@ -3,9 +3,6 @@ import random
 posi1 = 0
 posi2 = 0
 
-
-                
-
 def decorator1(func):
 
     def inner(value_check):
@@ -161,12 +158,8 @@ class Snake_Ladder:
                 victory_msg2()
                 
    
-def log_file():
-    file = open("game_data.txt", "a")
-    file.write("*************Player 1*****************")
-    file.close
+
 
 end_value = 15
-log_file()
 obj = Snake_Ladder(posi1, posi2)
 obj.taking_input(end_value)
