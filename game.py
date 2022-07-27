@@ -1,6 +1,5 @@
 import random
-import time
-#talha
+ 
 posi1 = 0
 posi2 = 0
 
@@ -183,6 +182,7 @@ obj.taking_input(end_value)
 
    
         
+
 
 
 
