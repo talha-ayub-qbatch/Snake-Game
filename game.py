@@ -163,13 +163,8 @@ class Snake_Ladder:
    
        
 
-def log_file():
-    file = open("game_data.txt", "a")
-    file.write("*************Player 1*****************")
-    file.close
 
 end_value = 15
-log_file()
 obj = Snake_Ladder(posi1, posi2)
 obj.taking_input(end_value)
 
