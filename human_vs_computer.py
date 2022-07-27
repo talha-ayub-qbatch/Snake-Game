@@ -10,8 +10,8 @@ def decorator1(func):
         while(True):
             try:
                
-                print("\n\n************* Player 1's turn *****************")
-                value_check = int(input("\nPlayer 1: Enter (1) to throw dice: "))
+                print("\n\n************* Human's turn *****************")
+                value_check = int(input("\nHuman: Enter (1) to throw dice: "))
 
                 if value_check != 1:
                     raise Exception()
@@ -27,36 +27,18 @@ def take_input1():
     pass
 
 
-def decorator2(func):
-
-    def inner(value_check):
-        '''check the value is 2 or not'''
-        while(True):
-            try:
-                print("\n\n############## Player 2's turn ################")
-                value_check = int(input("\nPlayer 2: Enter (2) to throw dice: "))
-                
-                if value_check != 2:
-                    raise Exception()
-                else:
-                    break
-            except Exception:
-                print("Please Enter the correct number(2)")
-        return func
-    return inner
-
-@decorator2
 def take_input2():
-    pass
+    print("\n\n############## Computer's turn ################")
+
 
 def victory_msg1():
     print("/////////////// Snake Ladder Game/////////////////")
-    print("\n           Player:1 wins\n           Player:2 lose\n           Game Over!\n")
+    print("\n           Human wins\n           Computer lose\n           Game Over!\n")
     print("/////////////// THE END //////////////////////////\n")
 
 def victory_msg2():
     print("/////////////// Snake Ladder Game/////////////////")
-    print("\n           Player:2 wins\n           Player:1 lose\n           Game Over!\n")
+    print("\n           Computer wins\n           Human lose\n           Game Over!\n")
     print("/////////////// THE END //////////////////////////\n")
     exit()
 
@@ -113,7 +95,7 @@ class Snake_Ladder:
                     victory_msg2()
                     
                
-                self.player_2 = take_input2(2)                
+                self.player_2 = take_input2()                
                 dice_player2_flag = False      
                 self.posi2 = self.move_player(pos, 2 , end_game)
                 return  self.posi2
@@ -150,7 +132,7 @@ class Snake_Ladder:
                 victory_msg1()
                 
             
-            self.player_2 = take_input2(2)
+            self.player_2 = take_input2()
             
             self.posi2 = self.move_player(self.posi2, 2, game_limit)     
             print("                 ########\n")
@@ -160,6 +142,6 @@ class Snake_Ladder:
    
 
 
-end_value = 15
+end_value = 100
 obj = Snake_Ladder(posi1, posi2)
 obj.taking_input(end_value)
