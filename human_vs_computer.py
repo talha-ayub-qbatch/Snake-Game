@@ -1,4 +1,22 @@
 import random
+import os
+os.system('clear')
+
+
+
+class open_file():
+
+    def __init__(self,filename,mode):
+        self.filename = filename
+        self.mode = mode
+
+    def __enter__(self):
+        self.file = open( self.filename, self.mode)
+        return self.file
+
+    def __exit__(self, exc_type ,exc_val, traceback):
+        self.file.close()
+
 
 posi1 = 0
 posi2 = 0
@@ -32,20 +50,56 @@ def take_input2():
 
 
 def victory_msg1():
+    '''if Human wins it will print the final result and store it in the game_data.txt'''
+
     print("/////////////// Snake Ladder Game/////////////////")
     print("\n           Human wins\n           Computer lose\n           Game Over!\n")
     print("/////////////// THE END //////////////////////////\n")
+    with open_file("humanvscomputer.txt","a") as f:
+        f.write("Game Result:\nHuman wins\nComputer lose\n\n")
+
+        #will check the file is closed or not 
+    # print(f.closed) 
+       
+    exit()
 
 def victory_msg2():
+    '''if Computer wins it will print the final result and store it in the game_data.txt'''
+
     print("/////////////// Snake Ladder Game/////////////////")
     print("\n           Computer wins\n           Human lose\n           Game Over!\n")
     print("/////////////// THE END //////////////////////////\n")
+    with open_file("humanvscomputer.txt","a") as f:
+        f.write("Game Result:\nComputer wins\nHuman lose\n\n")
+
+     #will check the file is closed or not 
+    # print(f.closed) 
+
     exit()
 
-class Snake_Ladder:
 
-    snake = { 29:8, 89:68 , 98:79 , 86:63 }
-    ladder = { 4:15, 14:35 , 31:70 , 22:78 }
+class SnakeLadder:
+    with open_file("snakeladder.txt","r") as f: 
+        data = f.readlines()                                # Read 'list' of all lines
+
+    snake_keys = list(map(int, data[0].split()))            # Data from first line
+    snake_values = data[1].split()                          # Data from second line
+    #  The dict() function creates a dictionary. The zip will merge the first and second items
+    snake = dict(zip(snake_keys, snake_values))                # Zip them and make dictionary
+
+    ladder_keys = list(map(int, data[2].split()))            # Data from third line
+    ladder_values = data[3].split()                          # Data from fourth line
+    ladder = dict(zip(ladder_keys, ladder_values))             # Zip them and make dictionary
+
+
+
+        # This will be the actual dictonary after reading from file 
+    # snake = { 29:8, 89:68 , 98:79 , 86:63 , 95:62 , 81:30 }
+    # ladder = { 4:15, 14:35 , 31:70 , 22:78 , 20:28 ,9:52 }
+
+    # player1_six = (6,1)
+    # player2_six = (6,2)
+
     
     def __init__(self, posi1, posi2):
         print("\n\n          $ Game Start $")
@@ -64,21 +118,17 @@ class Snake_Ladder:
         
         if(dice == 6 and player_name == 1):
             while(dice_player1_flag):
+
                 print(f"\nPrevious position:{pos}")
-                
-                
                 print(f"Dice:{dice}")
                 pos = pos + 6
                 print(f"Current position:{pos}")
-                
-                
                 print("Hurry You got 6, take one more turn!")
                 if(pos >= end_game):
                     victory_msg1()
                     
-                
-                
                 self.player_1 = take_input1(1)
+                
                 dice_player1_flag = False
                 self.posi1 = self.move_player(pos, 1, end_game)
                 return self.posi1
@@ -86,15 +136,13 @@ class Snake_Ladder:
         elif (dice ==6 and player_name == 2):
             while(dice_player2_flag):
                 print(f"\nPrevious position:{pos}")
-                
                 print(f"Dice:{dice}")
                 pos = pos + 6
                 print(f"Current position:{pos}")
                 print("Hurry You got 6, take one more turn!")
                 if(pos >= end_game):
                     victory_msg2()
-                    
-               
+        
                 self.player_2 = take_input2()                
                 dice_player2_flag = False      
                 self.posi2 = self.move_player(pos, 2 , end_game)
@@ -104,44 +152,39 @@ class Snake_Ladder:
             print(f"\nPrevious position:{pos}")  
             print(f"Dice:{dice}")
             get_pos = get_pos + dice
-           
-            if get_pos in Snake_Ladder.snake:
+            if get_pos in SnakeLadder.snake:
                 print("Snake bitten")
-                get_pos = Snake_Ladder.snake[get_pos]
+                get_pos = SnakeLadder.snake[get_pos]
                 print(f"Now at Position:{get_pos}\n")
-            elif get_pos in Snake_Ladder.ladder:
+            elif get_pos in SnakeLadder.ladder:
                 print("Taking Ladder")
-                get_pos = Snake_Ladder.ladder[get_pos]
+                get_pos = SnakeLadder.ladder[get_pos]
                 print(f"Now at Position:{get_pos}\n")
             else:
                 print(f"Current position:{get_pos}")
-            return get_pos
+            return int(get_pos)
             
-       
-  
     def taking_input(self,game_limit):
+     
         '''This Function will take the input from the user and use move_player function'''
-        while True:
+        flag_value = True
+        while flag_value:
             
-
             self.player_1 = take_input1(1)
-            
             self.posi1 = self.move_player(self.posi1, 1, game_limit) 
+           
             print("                 ********\n")
             if(self.posi1 >= game_limit):
                 victory_msg1()
-                
-            
+        
             self.player_2 = take_input2()
             
             self.posi2 = self.move_player(self.posi2, 2, game_limit)     
             print("                 ########\n")
             if(self.posi2 >= game_limit):
                 victory_msg2()
-                
-   
 
 
 end_value = 100
-obj = Snake_Ladder(posi1, posi2)
+obj = SnakeLadder(posi1, posi2)
 obj.taking_input(end_value)

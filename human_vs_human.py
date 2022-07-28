@@ -1,5 +1,21 @@
 import random
 
+
+class open_file():
+
+    def __init__(self,filename,mode):
+        self.filename = filename
+        self.mode = mode
+
+    def __enter__(self):
+        self.file = open( self.filename, self.mode)
+        return self.file
+
+    def __exit__(self, exc_type ,exc_val, traceback):
+        self.file.close()
+
+
+
 posi1 = 0
 posi2 = 0
 
@@ -50,27 +66,41 @@ def take_input2():
     pass
 
 def victory_msg1():
+    '''if Player1 wins it will print the final result and store it in the game_data.txt'''
+
     print("/////////////// Snake Ladder Game/////////////////")
     print("\n           Player:1 wins\n           Player:2 lose\n           Game Over!\n")
     print("/////////////// THE END //////////////////////////\n")
+    with open_file("humanvshuman.txt","a") as f:
+        f.write("Game Result:\nPlayer:1 wins\nPlayer:2 lose\n\n")
+
+        #will check the file is closed or not 
+    # print(f.closed) 
+       
+    exit()
 
 def victory_msg2():
+    '''if Player2 wins it will print the final result and store it in the game_data.txt'''
+
     print("/////////////// Snake Ladder Game/////////////////")
     print("\n           Player:2 wins\n           Player:1 lose\n           Game Over!\n")
     print("/////////////// THE END //////////////////////////\n")
+    with open_file("humanvshuman.txt","a") as f:
+        f.write("Game Result:\nPlayer:2 wins\nPlayer:1 lose\n\n")
+
+        #will check the file is closed or not 
+    # print(f.closed) 
     exit()
 
 class Snake_Ladder:
 
-    snake = { 29:8, 89:68 , 98:79 , 86:63 }
-    ladder = { 4:15, 14:35 , 31:70 , 22:78 }
+    snake = { 29:8, 89:68 , 98:79 , 86:63 , 95:62 , 81:30 }
+    ladder = { 4:15, 14:35 , 31:70 , 22:78 , 20:28 ,9:52 }
     
     def __init__(self, posi1, posi2):
         print("\n\n          $ Game Start $")
         self.posi1 = posi1
         self.posi2 = posi2
-
-       
 
     def move_player(self, pos, player_name, game_limit):
         '''This function will move the player and will call again when user's get 6'''
@@ -160,6 +190,6 @@ class Snake_Ladder:
    
 
 
-end_value = 100
+end_value = 10
 obj = Snake_Ladder(posi1, posi2)
 obj.taking_input(end_value)
