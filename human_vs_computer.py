@@ -1,21 +1,20 @@
 import random
 import os
 
-os.system('clear')
 
 
 
 class open_file():
 
-    def __init__(self,filename,mode):
+    def __init__(self, filename, mode):
         self.filename = filename
         self.mode = mode
 
     def __enter__(self):
-        self.file = open( self.filename, self.mode)
+        self.file = open(self.filename, self.mode)
         return self.file
 
-    def __exit__(self, exc_type ,exc_val, traceback):
+    def __exit__(self, exc_type , exc_val, traceback):
         self.file.close()
 
 
@@ -43,7 +42,8 @@ def decorator1(func):
 
 @decorator1
 def take_input1():
-    pass
+     print("\n\n          $ Game Start $")
+
 
 
 def take_input2():
@@ -59,9 +59,6 @@ def victory_msg1():
     with open_file("humanvscomputer.txt","a") as f:
         f.write("Game Result:\nHuman wins\nComputer lose\n\n")
 
-        #will check the file is closed or not 
-    # print(f.closed) 
-       
     exit()
 
 def victory_msg2():
@@ -73,24 +70,21 @@ def victory_msg2():
     with open_file("humanvscomputer.txt","a") as f:
         f.write("Game Result:\nComputer wins\nHuman lose\n\n")
 
-     #will check the file is closed or not 
-    # print(f.closed) 
-
     exit()
 
 
 class SnakeLadder:
-    with open_file("snakeladder.txt","r") as f: 
-        data = f.readlines()                                # Read 'list' of all lines
+    
+    with open_file("snakeladder.txt", "r") as f: 
+        data = f.readlines()                               
 
-    snake_keys = list(map(int, data[0].split()))            # Data from first line
-    snake_values = data[1].split()                          # Data from second line
-    #  The dict() function creates a dictionary. The zip will merge the first and second items
-    snake = dict(zip(snake_keys, snake_values))                # Zip them and make dictionary
+    snake_keys = list(map(int, data[0].split()))   
+    snake_values = data[1].split()                         
+    snake = dict(zip(snake_keys, snake_values))  
 
-    ladder_keys = list(map(int, data[2].split()))            # Data from third line
-    ladder_values = data[3].split()                          # Data from fourth line
-    ladder = dict(zip(ladder_keys, ladder_values))             # Zip them and make dictionary
+    ladder_keys = list(map(int, data[2].split()))            
+    ladder_values = data[3].split()                         
+    ladder = dict(zip(ladder_keys, ladder_values))           
 
 
 
@@ -98,12 +92,9 @@ class SnakeLadder:
     # snake = { 29:8, 89:68 , 98:79 , 86:63 , 95:62 , 81:30 }
     # ladder = { 4:15, 14:35 , 31:70 , 22:78 , 20:28 ,9:52 }
 
-    # player1_six = (6,1)
-    # player2_six = (6,2)
-
     
     def __init__(self, posi1, posi2):
-        print("\n\n          $ Game Start $")
+       
         self.posi1 = posi1
         self.posi2 = posi2
 
@@ -114,13 +105,14 @@ class SnakeLadder:
         dice_player1_flag = True
         dice_player2_flag = True
         get_pos = pos
-        dice = random.randint(1,6)
+        dice = random.randint(1, 6)
         end_game = game_limit
         
         if(dice == 6 and player_name == 1):
             while(dice_player1_flag):
 
                 print(f"\nPrevious position:{pos}")
+                print
                 print(f"Dice:{dice}")
                 pos = pos + 6
                 print(f"Current position:{pos}")
@@ -134,7 +126,7 @@ class SnakeLadder:
                 self.posi1 = self.move_player(pos, 1, end_game)
                 return self.posi1
                 
-        elif (dice ==6 and player_name == 2):
+        elif (dice == 6 and player_name == 2):
             while(dice_player2_flag):
                 print(f"\nPrevious position:{pos}")
                 print(f"Dice:{dice}")
@@ -165,11 +157,11 @@ class SnakeLadder:
                 print(f"Current position:{get_pos}")
             return int(get_pos)
             
-    def taking_input(self,game_limit):
+    def taking_input(self, game_limit):
      
         '''This Function will take the input from the user and use move_player function'''
-        flag_value = True
-        while flag_value:
+        
+        while True:
             
             self.player_1 = take_input1(1)
             self.posi1 = self.move_player(self.posi1, 1, game_limit) 
@@ -187,5 +179,6 @@ class SnakeLadder:
 
 
 end_value = 100
+os.system('clear')
 obj = SnakeLadder(posi1, posi2)
 obj.taking_input(end_value)
